@@ -2,20 +2,20 @@
 MooseBowTie  
 January 9, 2016  
 
+## Loading and preprocessing the data
 
 ```r
 #####
-## Loading and preprocessing the data
 # Load the data using read_csv from the readr package
 library(readr)
 activity <- read_csv("activity.csv", col_types = "iDi") # (iDi) specifies (integer, Date, and integer) for the classes of the 3 columns
 ```
 
 
+## What is mean total number of steps taken per day?
 
 ```r
 #####
-## What is mean total number of steps taken per day?
 # Calculate the total number of steps for each day
 stepsEachInterval <- split(activity$steps, activity$date) # Split the data by date
 stepsEachDay <- sapply(stepsEachInterval, sum) # Sum the number of steps in each day
@@ -47,10 +47,10 @@ median(stepsEachDay, na.rm=TRUE)
 ```
 
 
+## What is the average daily activity pattern?
 
 ```r
 #####
-## What is the average daily activity pattern?
 # Get the average number of steps in each interval, ignoring NA values
 intervalAverages <- numeric() # Create the vector that will hold the average of the step counts
 count <- 1 # Keeps track of interval averages (1 to 288)
@@ -86,10 +86,10 @@ unique(activity$interval)[104] # Find the value of the interval at that index
 Interval 835 (the 104th interval) has the highest average (206.17 steps).
 
 
+## Imputing missing values
 
 ```r
 #####
-## Imputing missing values
 ## Examine the NA values
 # Count the total number of NA values
 sum(is.na(activity))
@@ -180,11 +180,10 @@ The mean is the same, but the median increased slightly.
 A different method of replacing NA values would lead to different changes in the mean and median.
 
 
-
+## Are there differences in activity patterns between weekdays and weekends?
 
 ```r
 #####
-## Are there differences in activity patterns between weekdays and weekends?
 ## Add a factor column that shows whether or not the day is a weekday, or weekend
 activity$weekday <- weekdays(activity$date) # Create a column showing the day of the week
 activity$weekSection <- NA # Create a column that will be a weekday/weekend factor.  Initialize it with NA's
